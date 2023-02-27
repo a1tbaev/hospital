@@ -1,10 +1,7 @@
 package hospital.repository.impl;
 
 import hospital.App;
-import hospital.models.Appointment;
-import hospital.models.Department;
-import hospital.models.Doctor;
-import hospital.models.Patient;
+import hospital.models.*;
 import hospital.repository.AppointmentRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -22,10 +19,12 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public void saveAppointment(Patient patient, Appointment appointment, Long id) {
+        Hospital id1 = entityManager.createQuery("select h from Doctor d join d.hospital h on d.id = :id", Hospital.class).setParameter("id", id).getSingleResult();
         Department department = entityManager.createQuery("select de from Doctor d join d.departments de where d.id = :id", Department.class)
                 .setParameter("id", id).getSingleResult();
         entityManager.persist(appointment);
         Doctor doctor = entityManager.find(Doctor.class, id);
+        id1.addAppointment(appointment);
         appointment.setDoctor(doctor);
         appointment.setDepartment(department);
     }

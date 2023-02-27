@@ -33,9 +33,9 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     public void saveDoctor(Doctor doctor, Long departmentId) {
         Hospital hospitalByDepartmentId = departmentRepository.getHospitalByDepartmentId(departmentId);
         Department department = entityManager.find(Department.class, departmentId);
+        doctor.addDepartment(department);
         entityManager.persist(doctor);
         doctor.setHospital(hospitalByDepartmentId);
-        doctor.addDepartment(department);
     }
 
     @Override

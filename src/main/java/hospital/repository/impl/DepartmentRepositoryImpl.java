@@ -56,7 +56,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     @Override
     public Hospital getHospitalByDepartmentId(Long departmentId){
-        return entityManager.createQuery("select h from Department d join Hospital h where d.id = :id", Hospital.class)
+        return entityManager.createQuery("select h from Department d join d.hospital h on d.id = :id", Hospital.class)
                 .setParameter("id", departmentId).getSingleResult();
     }
 }

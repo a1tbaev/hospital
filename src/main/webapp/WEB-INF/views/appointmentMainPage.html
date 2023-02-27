@@ -5,7 +5,7 @@
     <title>Main page</title>
 </head>
 <body>
-<div  >
+<div>
     <table>
         <thead>
         <tr>
@@ -13,7 +13,6 @@
             <th>Date</th>
             <th>Department</th>
             <th>Doctor</th>
-            <th>Patient</th>
         </tr>
         </thead>
         <tbody>
@@ -22,10 +21,17 @@
             <td th:text="${appointment.date}"></td>
             <td th:text="${appointment.getDepartment().getName()}"></td>
             <td th:text="${appointment.getDoctor().getFirstName()}"></td>
+            <td th:text="${appointment.getPatient().getId()}"></td>
             <td>
                 <form th:method="DELETE" th:action="@{/appointments/{doctorId}/deleteAppointment/{appointmentId}(doctorId=${doctorId}, appointmentId=${appointment.id})}">
                     <input style="background: #ff0000;color: black" type="submit" class="btn btn-outline-primary" th:value="  Delete  "></input>
                 </form>
+                <a th:href="@{/patients/new/{appId}(appId=${appointment.id})}">
+                    <button type="button">Add</button>
+                </a>
+                <a th:href="@{/patients/{appId}(appId=${appointment.id})}">
+                    <button type="button">info</button>
+                </a>
             </td>
         </tr>
         </tbody>
