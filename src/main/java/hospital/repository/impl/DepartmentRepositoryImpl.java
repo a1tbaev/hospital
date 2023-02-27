@@ -37,10 +37,12 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     @Override
     public void deleteById(Long id) {
-        entityManager.remove(
-                entityManager.createQuery("select d from Hospital h join h.departments d where d.id = :id", Department.class)
-                        .setParameter("id", id).getSingleResult()
-        );
+//        entityManager.remove(
+//                entityManager.createQuery("select d from Hospital h join h.departments d where d.id = :id", Department.class)
+//                        .setParameter("id", id));
+        entityManager.createQuery("delete from Department where id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override

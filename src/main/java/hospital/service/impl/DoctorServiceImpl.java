@@ -1,7 +1,9 @@
 package hospital.service.impl;
 
+import hospital.models.Appointment;
 import hospital.models.Doctor;
 import hospital.models.Hospital;
+import hospital.repository.AppointmentRepository;
 import hospital.repository.DepartmentRepository;
 import hospital.repository.DoctorRepository;
 import hospital.repository.HospitalRepository;
@@ -16,6 +18,7 @@ import java.util.List;
 @Transactional
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
+    private final AppointmentRepository appointmentRepository;
     @Override
     public List<Doctor> getAllDoctors(Long departmentId) {
         return doctorRepository.getAllDoctors(departmentId);
@@ -33,6 +36,16 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void deleteDoctor(Long doctorId) {
+        Doctor doctor = doctorRepository.getDoctorById(doctorId);
+        Hospital hospital = doctor.getHospital();
+        List<Appointment> appointments = doctor.getAppointments();
+        appointments.forEach(a-> a.setDoctor(null));
+        appointments.forEach(a-> a.setPatient(null));
+        appointments.forEach(a-> a.setDepartment(null));
+        hospital.getAppointments().removeAll(appointments);
+        for (Appointment appointment : appointments) {
+            appointmentRepository.deleteAppointments(appointment.getId());
+        }
         doctorRepository.deleteDoctor(doctorId);
     }
 

@@ -24,7 +24,7 @@ public class AppointmentController {
 
     @DeleteMapping({"/{doctorId}/deleteAppointment/{appointmentId}"})
     public String deleteAppointment(@PathVariable("appointmentId")Long id, @PathVariable("doctorId") Long doctorId){
-        appointmentService.deleteAppointments(id);
+        appointmentService.deleteAppointments(doctorId, id);
         return "redirect:/appointments/"+doctorId;
     }
     @GetMapping("/new/{doctorId}")

@@ -9,6 +9,6 @@ public interface AppointmentService {
     void saveAppointment(Patient patient, Appointment appointment, Long id);
     Appointment getById(Long appointmentId);
     List<Appointment> getAllAppointments(Long doctorsId);
-    void deleteAppointments(Long appointmentsId);
+    void deleteAppointments(Long doctorId, Long appointmentsId);
     void updateAppointments(Long appointmentId, Appointment appointment);
 }

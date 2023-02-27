@@ -1,8 +1,10 @@
 package hospital.service.impl;
 
 import hospital.models.Appointment;
+import hospital.models.Hospital;
 import hospital.models.Patient;
 import hospital.repository.AppointmentRepository;
+import hospital.repository.DoctorRepository;
 import hospital.service.AppointmentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 @Transactional
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    private final DoctorRepository doctorRepository;
     @Override
     public void saveAppointment(Patient patient, Appointment appointment, Long id) {
         appointmentRepository.saveAppointment(patient, appointment, id);
@@ -31,7 +34,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void deleteAppointments(Long appointmentsId) {
+    public void deleteAppointments(Long doctorId, Long appointmentsId) {
+        Hospital hospital = doctorRepository.getDoctorById(doctorId).getHospital();
+        Appointment appointment = appointmentRepository.getById(appointmentsId);
+        appointment.setDoctor(null);
+        appointment.setDepartment(null);
+        appointment.setPatient(null);
+        hospital.getAppointments().remove(appointment);
         appointmentRepository.deleteAppointments(appointmentsId);
     }
 
