@@ -16,14 +16,14 @@ public class DoctorController {
     @GetMapping("{departmentId}")
     public String getAllDoctors(Model model, @PathVariable("departmentId") Long id){
         model.addAttribute("doctors", doctorService.getAllDoctors(id));
-        return "doctorsMainPage";
+        return "doctor/doctorsMainPage";
     }
 
     @GetMapping("/new/{departmentId}")
     public String newDoctor(Model model, @PathVariable("departmentId") Long id){
         model.addAttribute("newDoctor", new Doctor());
         model.addAttribute("departmentId", id);
-        return "newDoctor";
+        return "doctor/newDoctor";
     }
 
     @PostMapping("/save/{departmentId}")
@@ -41,7 +41,7 @@ public class DoctorController {
     public String edit(@PathVariable("id") Long id, @PathVariable("departmentId")Long Id,Model model){
         model.addAttribute("newDoctor", doctorService.getDoctorById(id));
         model.addAttribute("departmentId",Id);
-        return "editDoctor";
+        return "doctor/editDoctor";
     }
 
     @PatchMapping("/{departmentId}/update/{id}")

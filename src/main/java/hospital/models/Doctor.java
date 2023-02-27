@@ -1,6 +1,8 @@
 package hospital.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +21,11 @@ public class Doctor {
     @SequenceGenerator(name = "doctor_generator", sequenceName = "doctor_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doctor_generator")
     private Long id;
+    @NotEmpty(message = "Name shouldn't be empty!")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters!")
     private String firstName;
+    @NotEmpty(message = "surname shouldn't be empty!")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters!")
     private String lastName;
     private String position;
     @ManyToMany

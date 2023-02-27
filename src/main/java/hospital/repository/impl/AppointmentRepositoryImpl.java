@@ -42,7 +42,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public void deleteAppointments(Long appointmentsId) {
-        entityManager.remove(entityManager.find(Appointment.class, appointmentsId));
+        entityManager.createQuery("delete from Appointment where id = :id", Appointment.class).setParameter("id", appointmentsId);
     }
 
     @Override

@@ -28,8 +28,8 @@ public class PatientRepositoryImpl implements PatientRepository {
         //Hospital id = entityManager.createQuery("select h from Hospital h join h.appointments a on a.id = :id", Hospital.class).setParameter("id", appointmentId).getSingleResult();
         Appointment appointment = entityManager.find(Appointment.class, appointmentId);
         entityManager.persist(newPatient);
-        appointment.setPatient(newPatient);
         //id.addPatient(newPatient);
+        appointment.setPatient(newPatient);
     }
 
     @Override
